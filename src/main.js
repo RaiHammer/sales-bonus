@@ -108,7 +108,7 @@ function analyzeSalesData(data, options) {
     // Увеличить количество продаж
     seller.sales_count = seller.sales_count + 1;
     // Увеличить общую сумму всех продаж
-    seller.revenue = seller.revenue + record.total_amount;
+    seller.revenue += record.items.reduce((sum, item) => sum + calculateRevenue(item, productIndex[item.sku]), 0);
 
     // Расчёт прибыли для каждого товара
     record.items.forEach((item) => {
@@ -127,10 +127,8 @@ function analyzeSalesData(data, options) {
       // Учёт количества проданных товаров
       if (!seller.products_sold[item.sku]) {
         seller.products_sold[item.sku] = 0;
-        seller.products_sold[item.sku] = seller.products_sold[item.sku] + 1;
-      } else {
-        seller.products_sold[item.sku] = seller.products_sold[item.sku] + 1;
       }
+      seller.products_sold[item.sku] += item.quantity;
       // По артикулу товара увеличить его проданное количество у продавца
     });
   });
