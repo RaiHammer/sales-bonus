@@ -108,7 +108,7 @@ function analyzeSalesData(data, options) {
     // Увеличить количество продаж
     seller.sales_count = seller.sales_count + 1;
     // Увеличить общую сумму всех продаж
-    seller.revenue += record.items.reduce((sum, item) => sum + calculateRevenue(item, productIndex[item.sku]), 0);
+    seller.revenue = seller.revenue + record.total_amount;
 
     // Расчёт прибыли для каждого товара
     record.items.forEach((item) => {
